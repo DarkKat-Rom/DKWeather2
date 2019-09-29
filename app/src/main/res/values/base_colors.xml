@@ -12,9 +12,7 @@
 -->
 <resources>
 
-    <color name="colorPrimary">@color/primary_darkkat</color>
-    <color name="colorPrimaryDark">@color/primary_dark_darkkat</color>
-    <color name="colorAccent">@color/accent_darkkat</color>
-    <color name="colorBackground">@color/darkkat_blue_grey</color>
-    <color name="colorBackgroundFloating">@color/darkkat_blue_blue_grey</color>
+    <!-- Material based colors -->
+    <color name="material_blue_500">#ff2196f3</color>
+    <color name="material_blue_700">#ff1976d2</color>
 </resources>

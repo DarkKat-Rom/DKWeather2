@@ -12,9 +12,5 @@
 -->
 <resources>
 
-    <color name="colorPrimary">@color/primary_darkkat</color>
-    <color name="colorPrimaryDark">@color/primary_dark_darkkat</color>
-    <color name="colorAccent">@color/accent_darkkat</color>
-    <color name="colorBackground">@color/darkkat_blue_grey</color>
-    <color name="colorBackgroundFloating">@color/darkkat_blue_blue_grey</color>
+    <dimen name="toolbar_elevation">4dp</dimen>
 </resources>

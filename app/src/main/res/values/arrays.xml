@@ -12,9 +12,15 @@
 -->
 <resources>
 
-    <color name="colorPrimary">@color/primary_darkkat</color>
-    <color name="colorPrimaryDark">@color/primary_dark_darkkat</color>
-    <color name="colorAccent">@color/accent_darkkat</color>
-    <color name="colorBackground">@color/darkkat_blue_grey</color>
-    <color name="colorBackgroundFloating">@color/darkkat_blue_blue_grey</color>
+    <string-array name="app_theme_entries">
+        <item>@string/day_theme</item>
+        <item>@string/night_theme</item>
+        <item>@string/system_theme_title</item>
+    </string-array>
+
+    <string-array name="app_theme_values">
+        <item>theme_day</item>
+        <item>theme_night</item>
+        <item>theme_follow_system</item>
+    </string-array>
 </resources>
