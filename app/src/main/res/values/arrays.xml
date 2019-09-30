@@ -23,4 +23,16 @@
         <item>theme_night</item>
         <item>theme_follow_system</item>
     </string-array>
+
+    <string-array name="preference_icons_entries">
+        <item>@string/hide_preference_icons_space_reserved</item>
+        <item>@string/hide_preference_icons</item>
+        <item>@string/show_preference_icons</item>
+    </string-array>
+
+    <string-array name="preference_icons_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

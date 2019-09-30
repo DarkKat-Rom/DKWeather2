@@ -26,9 +26,15 @@
 
     <!-- Settings -->
     <string name="cat_theme_title">Design</string>
+    <string name="cat_settings_title">Einstellungen</string>
     <string name="app_theme_title">App Design</string>
     <string name="dlg_choose_theme_title">Wähle ein Design</string>
     <string name="day_theme">Helles Design</string>
     <string name="night_theme">Dunkles Design</string>
     <string name="system_theme_title">System Design</string>
+    <string name="preference_icons_title">Preference Icons</string>
+    <string name="dlg_preference_icons_title">Wähle ob das Preference icons angezeigt oder verborgen wird</string>
+    <string name="hide_preference_icons_space_reserved">Preference Icons mit Platz verbergen</string>
+    <string name="hide_preference_icons">Preference Icons verbergen</string>
+    <string name="show_preference_icons">Preference Icons anzeigen</string>
 </resources>

@@ -30,19 +30,39 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     public static final String TAG = "SettingsFragmentTag";
 
+    private Preference mCatTheme;
+    private Preference mCatSettings;
+    private Preference mAppTheme;
+    private Preference mIconVisibility;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
 
-        findPreference(Config.PREF_KEY_APP_THEME).setOnPreferenceChangeListener(
+        mCatTheme = findPreference(Config.PREF_KEY_CAT_THEME);
+        mCatSettings = findPreference(Config.PREF_KEY_CAT_SETTINGS);
+        mAppTheme = findPreference(Config.PREF_KEY_APP_THEME);
+        mIconVisibility = findPreference(Config.PREF_KEY_PREFERENCE_ICONS);
+
+        mAppTheme.setOnPreferenceChangeListener(
                 new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        String appTheme = (String) newValue;
-                        ThemeHelper.applyTheme(appTheme);
+                        ThemeHelper.applyTheme((String) newValue);
                         return true;
                     }
                 });
+
+        mIconVisibility.setOnPreferenceChangeListener(
+                new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        updateIconVisibility(Integer.valueOf((String) newValue));
+                        return true;
+                    }
+                });
+
+        updateIconVisibility(Config.getPreferenceIconsVisibility(getActivity()));
     }
 
     @Override
@@ -50,5 +70,32 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         ((AppCompatActivity) getActivity())
                     .getSupportActionBar().setTitle(R.string.toolbar_settings_subtitle);
         super.onResume();
+    }
+
+    private void updateIconVisibility(int visibility) {
+        switch (visibility) {
+            case Config.HIDE_PREFERENCE_ICONS_SPACE_RESERVED:
+                mCatTheme.setIconSpaceReserved(true);
+                mCatSettings.setIconSpaceReserved(true);
+                mAppTheme.setIconSpaceReserved(true);
+                mIconVisibility.setIconSpaceReserved(true);
+                mAppTheme.setIcon(null);
+                mIconVisibility.setIcon(null);
+                break;
+            case Config.HIDE_PREFERENCE_ICONS:
+                mCatTheme.setIconSpaceReserved(false);
+                mCatSettings.setIconSpaceReserved(false);
+                mAppTheme.setIconSpaceReserved(false);
+                mIconVisibility.setIconSpaceReserved(false);
+                mAppTheme.setIcon(null);
+                mIconVisibility.setIcon(null);
+                break;
+            default:
+                mCatTheme.setIconSpaceReserved(true);
+                mCatSettings.setIconSpaceReserved(true);
+                mAppTheme.setIcon(R.drawable.ic_theme);
+                mIconVisibility.setIcon(R.drawable.ic_show);
+                break;
+        }
     }
 }

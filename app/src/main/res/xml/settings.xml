@@ -15,16 +15,34 @@
 
     <PreferenceCategory
         app:key="cat_theme"
-        app:title="@string/cat_theme_title">
+        app:title="@string/cat_theme_title"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             app:key="app_theme"
             app:title="@string/app_theme_title"
-            app:icon="@drawable/ic_theme"
+            app:iconSpaceReserved="false"
             app:defaultValue="theme_follow_system"
             app:dialogTitle="@string/dlg_choose_theme_title"
             app:entries="@array/app_theme_entries"
             app:entryValues="@array/app_theme_values"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="cat_settings"
+        app:title="@string/cat_settings_title"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            app:key="preference_icons"
+            app:title="@string/preference_icons_title"
+            app:iconSpaceReserved="false"
+            app:defaultValue="0"
+            app:dialogTitle="@string/dlg_preference_icons_title"
+            app:entries="@array/preference_icons_entries"
+            app:entryValues="@array/preference_icons_values"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

@@ -26,9 +26,15 @@
 
     <!-- Settings -->
     <string name="cat_theme_title">Theme</string>
+    <string name="cat_settings_title">Settings</string>
     <string name="app_theme_title">App Theme</string>
     <string name="dlg_choose_theme_title">Choose a theme</string>
     <string name="day_theme">Light Theme</string>
     <string name="night_theme">Dark Theme</string>
     <string name="system_theme_title">System Theme</string>
+    <string name="preference_icons_title">Preference icons</string>
+    <string name="dlg_preference_icons_title">Choose to hide or show the preference icons</string>
+    <string name="hide_preference_icons_space_reserved">Hide preference icons with space</string>
+    <string name="hide_preference_icons">Hide preference icons</string>
+    <string name="show_preference_icons">Show preference icons</string>
 </resources>
