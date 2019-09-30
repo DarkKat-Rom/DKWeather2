@@ -25,6 +25,10 @@
     <string name="action_settings">Einstellungen</string>
 
     <!-- Settings -->
+    <string name="app_settings_title">App Einstellungen</string>
+    <string name="weather_settings_title">Wetter Einstellungen</string>
+
+    <!-- App settings -->
     <string name="cat_theme_title">Design</string>
     <string name="cat_settings_title">Einstellungen</string>
     <string name="app_theme_title">App Design</string>

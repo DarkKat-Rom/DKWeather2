@@ -13,16 +13,4 @@
 <androidx.preference.PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        app:key="app_settings"
-        app:title="@string/app_settings_title"
-        app:iconSpaceReserved="false"
-        app:fragment="net.darkkatrom.dkweather2.fragments.AppSettingsFragment" />
-
-    <Preference
-        app:key="weather_settings"
-        app:title="@string/weather_settings_title"
-        app:iconSpaceReserved="false"
-        app:fragment="net.darkkatrom.dkweather2.fragments.WeatherSettingsFragment" />
-
 </androidx.preference.PreferenceScreen>

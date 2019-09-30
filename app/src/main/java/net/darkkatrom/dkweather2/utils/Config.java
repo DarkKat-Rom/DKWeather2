@@ -25,6 +25,8 @@ import androidx.preference.PreferenceManager;
 public class Config {
     public static final String PREF_KEY_CAT_THEME        = "cat_theme";
     public static final String PREF_KEY_CAT_SETTINGS     = "cat_settings";
+    public static final String PREF_KEY_APP_SETTINGS     = "app_settings";
+    public static final String PREF_KEY_WEATHER_SETTINGS = "weather_settings";
     public static final String PREF_KEY_APP_THEME        = "app_theme";
     public static final String PREF_KEY_PREFERENCE_ICONS = "preference_icons";
     

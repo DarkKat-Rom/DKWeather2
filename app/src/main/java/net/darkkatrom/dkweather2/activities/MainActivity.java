@@ -19,15 +19,18 @@ package net.darkkatrom.dkweather2.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.widget.Toolbar;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.fragments.MainFragment;
 import net.darkkatrom.dkweather2.fragments.SettingsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,22 @@ public class MainActivity extends AppCompatActivity {
             showFragment(MainFragment.TAG);
         }
     }
+
+    @Override
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        final Bundle args = pref.getExtras();
+        final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
+                getClassLoader(),
+                pref.getFragment());
+        fragment.setArguments(args);
+        fragment.setTargetFragment(caller, 0);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_layout, fragment)
+                .addToBackStack(null)
+                .commit();
+        return true;
+    }
+
 
     public void showFragment(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
