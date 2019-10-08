@@ -21,7 +21,9 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
- 
+
+import net.darkkatrom.dkweather2.WeatherInfo;
+
 public class Config {
     public static final String PREF_KEY_CAT_THEME        = "cat_theme";
     public static final String PREF_KEY_CAT_SETTINGS     = "cat_settings";
@@ -37,6 +39,8 @@ public class Config {
     public static final int HIDE_PREFERENCE_ICONS_SPACE_RESERVED = 0;
     public static final int HIDE_PREFERENCE_ICONS                = 1;
     public static final int SHOW_PREFERENCE_ICONS                = 2;
+
+    public static final String PREF_KEY_WEATHER_DATA  = "weather_data";
 
     public static int getTheme(Context context) {
         SharedPreferences prefs = PreferenceManager
@@ -76,5 +80,31 @@ public class Config {
                 break;
         }
         return iconsInt;
+    }
+
+    public static WeatherInfo getWeatherData(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        String str = prefs.getString(PREF_KEY_WEATHER_DATA, null);
+        if (str != null) {
+            WeatherInfo data = WeatherInfo.fromSerializedString(context, str);
+            return data;
+        }
+        return null;
+    }
+    
+    public static void setWeatherData(Context context, WeatherInfo data) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        prefs.edit().putString(PREF_KEY_WEATHER_DATA, data.toSerializedString()).commit();
+    }
+
+    public static void clearWeatherData(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        prefs.edit().remove(PREF_KEY_WEATHER_DATA).commit();
     }
  }

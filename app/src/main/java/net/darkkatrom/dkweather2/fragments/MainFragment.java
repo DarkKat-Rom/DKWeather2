@@ -16,6 +16,7 @@
 
 package net.darkkatrom.dkweather2.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,17 +24,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import net.darkkatrom.dkweather2.R;
+import net.darkkatrom.dkweather2.WeatherInfo;
 import net.darkkatrom.dkweather2.activities.MainActivity;
+import net.darkkatrom.dkweather2.utils.Config;
+import net.darkkatrom.dkweather2.utils.JobUtil;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
+        View.OnClickListener {
 
     public static final String TAG = "MainFragmentTag";
+
+    private WeatherInfo mWeatherInfo;
+
+    private TextView mLocationText;
+    private TextView mConditionText;
+    private TextView mTempText;
+    private TextView mTempLowHighText;
+    private ImageView mLocationImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,27 @@ public class MainFragment extends Fragment {
 
         ((AppCompatActivity) getActivity())
                     .getSupportActionBar().setTitle(R.string.app_name);
+
+        mWeatherInfo = Config.getWeatherData(getActivity());
+
+        view.findViewById(R.id.update_weather_data).setOnClickListener(this);
+        view.findViewById(R.id.delete_weather_data).setOnClickListener(this);
+        
+        mLocationText = (TextView) view.findViewById(R.id.weather_location_text);
+        mConditionText = (TextView) view.findViewById(R.id.weather_condition_text);
+        mTempText = (TextView) view.findViewById(R.id.weather_temp_text);
+        mTempLowHighText = (TextView) view.findViewById(R.id.weather_temp_low_high_text);
+        mLocationImage = (ImageView) view.findViewById(R.id.weather_condition_image);
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
+        if (mWeatherInfo == null) {
+            JobUtil.startUpdate(getActivity());
+        } else {
+            updateContent();
+        }
     }
 
     @Override
@@ -69,5 +105,43 @@ public class MainFragment extends Fragment {
             ((MainActivity) getActivity()).showFragment(SettingsFragment.TAG);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.update_weather_data) {
+            JobUtil.startUpdate(getActivity());
+        } else {
+            Config.clearWeatherData(getActivity());
+        }
+        updateContent();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(Config.PREF_KEY_WEATHER_DATA)) {
+            if (getActivity() != null) {
+                mWeatherInfo = Config.getWeatherData(getActivity());
+                if (mWeatherInfo != null) {
+                    updateContent();
+                }
+            }
+        }
+    }
+
+    private void updateContent() {
+        if (mWeatherInfo == null) {
+            mLocationText.setText("--");
+            mConditionText.setText(null);
+            mTempText.setText(null);
+            mTempLowHighText.setText(null);
+            mLocationImage.setImageResource(R.drawable.weather_na);
+        } else {
+            mLocationText.setText(mWeatherInfo.getCity());
+            mConditionText.setText(mWeatherInfo.getCondition());
+            mTempText.setText(mWeatherInfo.getFormattedTemperature());
+            mTempLowHighText.setText(mWeatherInfo.getFormattedLow() + " | " + mWeatherInfo.getFormattedHigh());
+            mLocationImage.setImageDrawable(mWeatherInfo.getConditionIcon(mWeatherInfo.getConditionCode()));
+        }
     }
 }

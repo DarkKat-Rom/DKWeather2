@@ -23,7 +23,9 @@
 
     <!-- Main activity -->
     <string name="action_settings">Einstellungen</string>
-
+    <string name="update_weather_data_title">Wetterdaten aktualisieren</string>
+    <string name="delete_weather_data_title">Wetterdaten löschen</string>
+    
     <!-- Settings -->
     <string name="app_settings_title">App Einstellungen</string>
     <string name="weather_settings_title">Wetter Einstellungen</string>
@@ -41,4 +43,11 @@
     <string name="hide_preference_icons_space_reserved">Preference Icons mit Platz verbergen</string>
     <string name="hide_preference_icons">Preference Icons verbergen</string>
     <string name="show_preference_icons">Preference Icons anzeigen</string>
+
+    <!-- Units -->
+    <string name="temp_celsius_unit_title">C</string>
+    <string name="speed_kph_unit_title">&#160;km/h</string>
+    <string name="pressure_unit_title">&#160;hPa</string>
+    <string name="precipitation_unit_1h_title">&#160;mm/h</string>
+    <string name="precipitation_unit_3h_title">&#160;mm/3h</string>
 </resources>
