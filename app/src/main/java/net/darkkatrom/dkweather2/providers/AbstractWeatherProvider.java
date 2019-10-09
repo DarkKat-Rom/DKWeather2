@@ -23,41 +23,54 @@ import android.util.Log;
 
 import net.darkkatrom.dkweather2.WeatherInfo;
 
-import java.io.IOException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.Exception;
+import java.lang.StringBuilder;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public abstract class AbstractWeatherProvider {
     private static final String TAG = "DKWeather:AbstractWeatherProvider";
     private static final boolean DEBUG = false;
+
     protected Context mContext;
 
     public AbstractWeatherProvider(Context context) {
         mContext = context;
     }
 
-    protected String retrieve(String url) {
-        HttpGet request = new HttpGet(url);
+    protected String retrieve(String urlString) {
+        HttpURLConnection urlConnection = null;
+        StringBuilder result = new StringBuilder();
+        boolean error = false;
+
         try {
-            HttpResponse response = new DefaultHttpClient().execute(request);
-            int code = response.getStatusLine().getStatusCode();
-            if (code != HttpStatus.SC_OK) {
-                log(TAG, "HttpStatus: " + code + " for url: " + url);
-                return null;
+            URL url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line;
+                
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            } else {
+                error = true;
             }
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                return EntityUtils.toString(entity);
+        } catch(Exception e) {
+            error = true;
+            Log.e(TAG, "Couldn't retrieve data from url " + urlString, e);
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
             }
-        } catch (IOException e) {
-            Log.e(TAG, "Couldn't retrieve data from url " + url, e);
         }
-        return null;
+
+        return error ? null : result.toString();
     }
 
     public abstract WeatherInfo getLocationWeather(Location location, boolean metric);
