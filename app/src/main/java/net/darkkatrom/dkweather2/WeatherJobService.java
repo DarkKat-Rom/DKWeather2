@@ -82,7 +82,7 @@ public class WeatherJobService extends JobService {
             AbstractWeatherProvider provider = new OpenWeatherMapProvider(this);
             Location location = getCurrentLocation();
             if (location != null) {
-                mWeatherInfo = provider.getLocationWeather(location, true);
+                mWeatherInfo = provider.getLocationWeather(location, Config.isMetric(this));
             }
             if (mWeatherInfo != null) {
                 Config.setWeatherData(this, mWeatherInfo);

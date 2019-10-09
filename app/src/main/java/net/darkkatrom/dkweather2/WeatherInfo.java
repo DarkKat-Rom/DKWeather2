@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
+import net.darkkatrom.dkweather2.utils.Config;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -253,8 +255,9 @@ public class WeatherInfo {
             return NO_VALUE;
         }
 
-        speed *= 3.6f;
-
+        if (Config.isMetric(context)) {
+            speed *= 3.6f;
+        }
         String formattedUnitAndDirection = unit + " - " + getWindDirection(context, direction);
 
         return ONE_DIGITS_FORMAT.format(speed) + formattedUnitAndDirection;

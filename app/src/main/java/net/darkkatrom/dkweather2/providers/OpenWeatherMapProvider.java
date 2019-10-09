@@ -56,7 +56,7 @@ public class OpenWeatherMapProvider extends AbstractWeatherProvider {
     }
 
     private WeatherInfo handleWeatherRequest(String selection, boolean metric) {
-        String units = "metric";
+        String units = metric ? "metric" : "imperial";
         String locale = getLanguageCode();
         String conditionUrl = String.format(Locale.US, URL_WEATHER, selection, units, locale, API_KEY);
         String conditionResponse = retrieve(conditionUrl);
@@ -82,8 +82,10 @@ public class OpenWeatherMapProvider extends AbstractWeatherProvider {
             JSONObject sysData = conditions.getJSONObject("sys");
             float[] lowhigh =
                     parseForecasts(new JSONObject(forecastResponse).getJSONArray("list"), metric);
-            int tempUnitResId = R.string.temp_celsius_unit_title;
-            int speedUnitResId = R.string.speed_kph_unit_title;
+            int tempUnitResId = metric
+                    ? R.string.temp_celsius_unit_title : R.string.temp_fahrenheit_unit_title;
+            int speedUnitResId = metric
+                    ? R.string.speed_kph_unit_title : R.string.speed_mph_unit_title;
             String localizedCityName = conditions.getString("name");
 
             WeatherInfo w = new WeatherInfo(mContext, conditions.getString("id"), localizedCityName,

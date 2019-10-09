@@ -36,6 +36,8 @@ public class Config {
     public static final String THEME_NIGHT =         "theme_night";
     public static final String THEME_FOLLOW_SYSTEM = "theme_follow_system";
 
+    public static final String PREF_KEY_WEATHER_USE_METRIC_UNITS = "weather_use_metric_units";
+
     public static final int HIDE_PREFERENCE_ICONS_SPACE_RESERVED = 0;
     public static final int HIDE_PREFERENCE_ICONS                = 1;
     public static final int SHOW_PREFERENCE_ICONS                = 2;
@@ -106,5 +108,12 @@ public class Config {
                 .getDefaultSharedPreferences(context);
 
         prefs.edit().remove(PREF_KEY_WEATHER_DATA).commit();
+    }
+
+    public static boolean isMetric(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.getBoolean(PREF_KEY_WEATHER_USE_METRIC_UNITS, true);
     }
  }

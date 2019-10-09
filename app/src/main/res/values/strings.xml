@@ -43,10 +43,17 @@
     <string name="hide_preference_icons_space_reserved">Hide preference icons with space</string>
     <string name="hide_preference_icons">Hide preference icons</string>
     <string name="show_preference_icons">Show preference icons</string>
+    
+    <string name="weather_use_metric_units_title">Metric units</string>
+    <string name="weather_use_metric_units_on_summary">Metric units</string>
+    <string name="weather_use_metric_units_off_summary">Imperial units</string>
+
 
     <!-- Units -->
     <string name="temp_celsius_unit_title">C</string>
+    <string name="temp_fahrenheit_unit_title">F</string>
     <string name="speed_kph_unit_title">&#160;kph</string>
+    <string name="speed_mph_unit_title">&#160;mph</string>
     <string name="pressure_unit_title">&#160;hPa</string>
     <string name="precipitation_unit_1h_title">&#160;mm/h</string>
     <string name="precipitation_unit_3h_title">&#160;mm/3h</string>

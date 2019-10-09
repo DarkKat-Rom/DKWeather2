@@ -10,7 +10,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<androidx.preference.PreferenceScreen
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.preference.PreferenceScreen>
+    <SwitchPreferenceCompat
+        app:key="weather_use_metric_units"
+        app:title="@string/weather_use_metric_units_title"
+        app:iconSpaceReserved="false"
+        android:summaryOn="@string/weather_use_metric_units_on_summary"
+        android:summaryOff="@string/weather_use_metric_units_off_summary"
+        app:defaultValue="true" />
+
+</PreferenceScreen>
