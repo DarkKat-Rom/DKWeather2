@@ -16,7 +16,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:padding="@dimen/main_fragment_layout_padding"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/update_weather_data_title"
-            android:padding="10dp"
+            android:padding="@dimen/weather_button_padding"
             android:singleLine="true"
             style="@style/Widget.AppCompat.Button" />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/delete_weather_data_title"
-            android:padding="10dp"
+            android:padding="@dimen/weather_button_padding"
             android:singleLine="true"
             style="@style/Widget.AppCompat.Button" />
 
@@ -55,6 +55,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView
@@ -92,6 +93,49 @@
             android:layout_height="wrap_content"
             android:src="@drawable/weather_na"
             android:tint="?attr/colorControlNormal" />
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_weather_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="@dimen/no_weather_image_layout_size"
+            android:layout_height="@dimen/no_weather_image_layout_size"
+            android:layout_marginTop="@dimen/no_weather_image_layout_margin_top">
+            
+            <ImageView
+                android:id="@+id/no_weather_phone_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/cellphone_android"
+                android:tint="?attr/colorControlNormal"
+                android:scaleType="centerCrop" />
+            
+            <ImageView
+                android:id="@+id/no_weather_image"
+                android:layout_width="@dimen/no_weather_image_size"
+                android:layout_height="@dimen/no_weather_image_size"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_no_location_permission"
+                android:tint="?attr/colorError"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/no_weather_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/no_weather_message_text_margin_top"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?attr/colorError" />
             
     </LinearLayout>
 </LinearLayout>

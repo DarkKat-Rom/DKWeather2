@@ -13,4 +13,11 @@
 <resources>
 
     <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="main_fragment_layout_padding">8dp</dimen>
+    <dimen name="weather_button_padding">10dp</dimen>
+    <dimen name="no_weather_image_layout_size">384dp</dimen>
+    <dimen name="no_weather_image_layout_margin_top">48dp</dimen>
+    <dimen name="no_weather_image_size">96dp</dimen>
+    <dimen name="no_weather_message_text_margin_top">48dp</dimen>
+    <dimen name="weather_layout_width">384dp</dimen>
 </resources>

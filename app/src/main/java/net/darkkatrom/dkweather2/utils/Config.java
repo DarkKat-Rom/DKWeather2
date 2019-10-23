@@ -44,6 +44,9 @@ public class Config {
 
     public static final String PREF_KEY_WEATHER_DATA  = "weather_data";
 
+    public static final String PREF_KEY_LOCATION_PERMISSION_BLOCKED =
+            "location_permission_blocked";
+
     public static int getTheme(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -115,5 +118,19 @@ public class Config {
                 .getDefaultSharedPreferences(context);
 
         return prefs.getBoolean(PREF_KEY_WEATHER_USE_METRIC_UNITS, true);
+    }
+
+    public static boolean isLocationPermissionBlocked(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.getBoolean(PREF_KEY_LOCATION_PERMISSION_BLOCKED, false);
+    }
+
+    public static boolean setIsLocationPermissionBlocked(Context context, boolean blocked) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.edit().putBoolean(PREF_KEY_LOCATION_PERMISSION_BLOCKED, blocked).commit();
     }
  }

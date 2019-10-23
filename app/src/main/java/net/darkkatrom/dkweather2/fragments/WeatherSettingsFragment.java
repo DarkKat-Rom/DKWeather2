@@ -24,6 +24,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.utils.Config;
 import net.darkkatrom.dkweather2.utils.JobUtil;
+import net.darkkatrom.dkweather2.utils.PermissionsHelper;
 
 public class WeatherSettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = "WeatherSettingsFragmentTag";
@@ -50,6 +51,8 @@ public class WeatherSettingsFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
         updateIconVisibility();
+        mWeatherUseMetricUnits.setEnabled(
+                PermissionsHelper.hasLocationPermission(getActivity()));
     }
 
     private void updateIconVisibility() {

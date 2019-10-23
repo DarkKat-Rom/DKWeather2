@@ -16,10 +16,13 @@
 
 package net.darkkatrom.dkweather2.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.Preference;
@@ -28,9 +31,15 @@ import androidx.preference.PreferenceFragmentCompat;
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.fragments.MainFragment;
 import net.darkkatrom.dkweather2.fragments.SettingsFragment;
+import net.darkkatrom.dkweather2.fragments.PermissionRationaleDialogFragment;
+import net.darkkatrom.dkweather2.utils.Config;
+import net.darkkatrom.dkweather2.utils.JobUtil;
+import net.darkkatrom.dkweather2.utils.PermissionsHelper;
 
 public class MainActivity extends AppCompatActivity implements
-        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+        MainFragment.WeatherButtonClickListener,
+        PermissionRationaleDialogFragment.PermissionRationaleDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,35 @@ public class MainActivity extends AppCompatActivity implements
 
         if (savedInstanceState == null) {
             showFragment(MainFragment.TAG);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (Config.isLocationPermissionBlocked(this)) {
+                        Config.setIsLocationPermissionBlocked(this, false);
+                    }
+                    JobUtil.startUpdate(this);
+                } else if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        if (Config.isLocationPermissionBlocked(this)) {
+                            Config.setIsLocationPermissionBlocked(this, false);
+                        }
+                        PermissionRationaleDialogFragment dialogFragment = new PermissionRationaleDialogFragment();
+                        dialogFragment.show(getSupportFragmentManager(), "dialog_fragment");
+                    } else {
+                        if (!Config.isLocationPermissionBlocked(this)) {
+                            Config.setIsLocationPermissionBlocked(this, true);
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -59,6 +97,33 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    @Override
+    public void onWeatherUpdateButtonClick(MainFragment fragment) {
+        if (!PermissionsHelper.hasLocationPermission(this)) {
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        } else {
+            JobUtil.startUpdate(this);
+        }
+    }
+
+    @Override
+    public void onWeatherDeleteButtonClick(MainFragment fragment) {
+        Config.clearWeatherData(this);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        requestPermissions(
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+    }
 
     public void showFragment(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
