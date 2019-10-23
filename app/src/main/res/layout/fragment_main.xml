@@ -79,7 +79,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="?android:attr/textColorPrimary" />
 
-
         <TextView
             android:id="@+id/weather_temp_low_high_text"
             android:layout_width="wrap_content"
