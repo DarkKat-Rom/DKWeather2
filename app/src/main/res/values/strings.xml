@@ -26,14 +26,19 @@
     <string name="load_weather_data_title">Load weather data</string>
     <string name="update_weather_data_title">Update weather data</string>
     <string name="delete_weather_data_title">Delete weather data</string>
-    <string name="permission_missing_title">No location permission</string>
+    <string name="location_status_disabled_message">Location is disabled</string>
+    <string name="location_status_no_permission_message">No location permission</string>
+    <string name="location_status_disabled_no_permission_message">Location is disabled\n\nNo location permission</string>
     <string name="weather_data_missing_title">No weather data</string>
 
     <!-- Dialog -->
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_enable">Enable</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="permission_rationale_dialog_title">Permission needed</string>
     <string name="permission_rationale_dialog_message">In order to show the weather, DK Weather needs access to the current location.\nClick \'OK\', to show the permissions dialog again.</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="location_disabled_dialog_title">Cannot retrieve location!</string>
+    <string name="location_disabled_dialog_message">Location is disabled.\nClick \'Enable\', to open location system settings.</string>
 
     <!-- Settings -->
     <string name="app_settings_title">App Settings</string>

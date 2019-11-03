@@ -17,8 +17,10 @@
 package net.darkkatrom.dkweather2.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,17 +31,19 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import net.darkkatrom.dkweather2.R;
+import net.darkkatrom.dkweather2.fragments.LocationDisabledDialogFragment;
 import net.darkkatrom.dkweather2.fragments.MainFragment;
-import net.darkkatrom.dkweather2.fragments.SettingsFragment;
 import net.darkkatrom.dkweather2.fragments.PermissionRationaleDialogFragment;
+import net.darkkatrom.dkweather2.fragments.SettingsFragment;
 import net.darkkatrom.dkweather2.utils.Config;
 import net.darkkatrom.dkweather2.utils.JobUtil;
-import net.darkkatrom.dkweather2.utils.PermissionsHelper;
+import net.darkkatrom.dkweather2.utils.LocationHelper;
 
 public class MainActivity extends AppCompatActivity implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
         MainFragment.WeatherButtonClickListener,
-        PermissionRationaleDialogFragment.PermissionRationaleDialogListener {
+        PermissionRationaleDialogFragment.PermissionRationaleDialogListener,
+        LocationDisabledDialogFragment.LocationDisabledDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+            case LocationHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (Config.isLocationPermissionBlocked(this)) {
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
                             Config.setIsLocationPermissionBlocked(this, false);
                         }
                         PermissionRationaleDialogFragment dialogFragment = new PermissionRationaleDialogFragment();
-                        dialogFragment.show(getSupportFragmentManager(), "dialog_fragment");
+                        dialogFragment.show(getSupportFragmentManager(), "permission_rationale_dialog_fragment");
                     } else {
                         if (!Config.isLocationPermissionBlocked(this)) {
                             Config.setIsLocationPermissionBlocked(this, true);
@@ -99,12 +103,18 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onWeatherUpdateButtonClick(MainFragment fragment) {
-        if (!PermissionsHelper.hasLocationPermission(this)) {
-            requestPermissions(
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        } else {
+        int locationStatus = LocationHelper.getLocationStatus(this);
+        if (locationStatus == LocationHelper.LOCATION_STATUS_OK) {
             JobUtil.startUpdate(this);
+        } else {
+            if (locationStatus == LocationHelper.LOCATION_STATUS_DISABLED) {
+                LocationDisabledDialogFragment dialogFragment = new LocationDisabledDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "location_disabled_dialog_fragment");
+            } else {
+                requestPermissions(
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        LocationHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
         }
     }
 
@@ -114,15 +124,30 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onRationaleDialogPositiveClick(DialogFragment dialog) {
         requestPermissions(
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                PermissionsHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                LocationHelper.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onRationaleDialogNegativeClick(DialogFragment dialog) {
+    }
+
+    @Override
+    public void onLocationDisabledDialogPositiveClick(DialogFragment dialog) {
+        Intent i = new Intent();
+        i.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        i.addCategory(Intent.CATEGORY_DEFAULT);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(i);
+    }
+
+    @Override
+    public void onLocationDisabledDialogNegativeClick(DialogFragment dialog) {
     }
 
     public void showFragment(String tag) {

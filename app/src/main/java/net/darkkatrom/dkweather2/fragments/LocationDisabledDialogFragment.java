@@ -26,31 +26,31 @@ import androidx.fragment.app.DialogFragment;
 
 import net.darkkatrom.dkweather2.R;
 
-public class PermissionRationaleDialogFragment extends DialogFragment {
+public class LocationDisabledDialogFragment extends DialogFragment {
 
-    private PermissionRationaleDialogListener mListener = null;
+    private LocationDisabledDialogListener mListener = null;
 
-    public interface PermissionRationaleDialogListener {
-        void onRationaleDialogPositiveClick(DialogFragment dialog);
-        void onRationaleDialogNegativeClick(DialogFragment dialog);
+    public interface LocationDisabledDialogListener {
+        void onLocationDisabledDialogPositiveClick(DialogFragment dialog);
+        void onLocationDisabledDialogNegativeClick(DialogFragment dialog);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.permission_rationale_dialog_title)
-                .setMessage(R.string.permission_rationale_dialog_message)
-                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.location_disabled_dialog_title)
+                .setMessage(R.string.location_disabled_dialog_message)
+                .setPositiveButton(R.string.dialog_enable, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (mListener != null) {
-                            mListener.onRationaleDialogPositiveClick(PermissionRationaleDialogFragment.this);
+                            mListener.onLocationDisabledDialogPositiveClick(LocationDisabledDialogFragment.this);
                         }
                    }
                })
                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (mListener != null) {
-                            mListener.onRationaleDialogNegativeClick(PermissionRationaleDialogFragment.this);
+                            mListener.onLocationDisabledDialogNegativeClick(LocationDisabledDialogFragment.this);
                         }
                    }
                });
@@ -60,8 +60,8 @@ public class PermissionRationaleDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof PermissionRationaleDialogListener) {
-            mListener = (PermissionRationaleDialogListener) context;
+        if (context instanceof LocationDisabledDialogListener) {
+            mListener = (LocationDisabledDialogListener) context;
         }
     }
 }

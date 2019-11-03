@@ -39,14 +39,14 @@ import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.WeatherInfo;
 import net.darkkatrom.dkweather2.activities.MainActivity;
 import net.darkkatrom.dkweather2.utils.Config;
-import net.darkkatrom.dkweather2.utils.PermissionsHelper;
+import net.darkkatrom.dkweather2.utils.LocationHelper;
 
 public class MainFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
 
     public static final String TAG = "MainFragmentTag";
 
-    private boolean mHasLocationPermission = false;
+    private int mLocationStatus;
     private boolean mIsLocationPermissionBlocked = false;
     private WeatherInfo mWeatherInfo;
 
@@ -98,7 +98,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
         ((AppCompatActivity) getActivity())
                     .getSupportActionBar().setTitle(R.string.app_name);
 
-        mHasLocationPermission = PermissionsHelper.hasLocationPermission(getActivity());
+        mLocationStatus = LocationHelper.getLocationStatus(getActivity());
         mIsLocationPermissionBlocked = Config.isLocationPermissionBlocked(getActivity());
         mWeatherInfo = Config.getWeatherData(getActivity());
 
@@ -129,11 +129,11 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onResume() {
         super.onResume();
-        if (mHasLocationPermission != PermissionsHelper.hasLocationPermission(getActivity())
+        if (mLocationStatus != LocationHelper.getLocationStatus(getActivity())
                 || mIsLocationPermissionBlocked != Config.isLocationPermissionBlocked(getActivity())) {
-            mHasLocationPermission = PermissionsHelper.hasLocationPermission(getActivity());
+            mLocationStatus = LocationHelper.getLocationStatus(getActivity());
             mIsLocationPermissionBlocked = Config.isLocationPermissionBlocked(getActivity());
-            if (mHasLocationPermission && mIsLocationPermissionBlocked) {
+            if (mLocationStatus < LocationHelper.LOCATION_STATUS_NO_PERMISSION && mIsLocationPermissionBlocked) {
                 mIsLocationPermissionBlocked = false;
                 Config.setIsLocationPermissionBlocked(getActivity(), mIsLocationPermissionBlocked);
             }
@@ -180,7 +180,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     private void updateContent() {
-        if (mWeatherInfo != null && mHasLocationPermission) {
+        if (mWeatherInfo != null && mLocationStatus == LocationHelper.LOCATION_STATUS_OK) {
             mWeatherUpdateButton.setEnabled(true);
             mWeatherLayout.setVisibility(View.VISIBLE);
             mNoWeatherLayout.setVisibility(View.GONE);
@@ -198,13 +198,12 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             if (mNoWeatherMessageTextLayout != null) {
                 mNoWeatherMessageTextLayout.setVisibility(View.VISIBLE);
             }
-            int color = getColorFromThemeAttribute(mHasLocationPermission
+            int color = getColorFromThemeAttribute(mLocationStatus == LocationHelper.LOCATION_STATUS_OK
                     ? android.R.attr.textColorPrimary : R.attr.colorError);
-            mNoWeatherImage.setImageResource(mHasLocationPermission
+            mNoWeatherImage.setImageResource(mLocationStatus == LocationHelper.LOCATION_STATUS_OK
                     ? R.drawable.weather_na : R.drawable.ic_no_location_permission);
             mNoWeatherImage.setImageTintList(ColorStateList.valueOf(color));
-            mNoWeatherMessageText.setText(mHasLocationPermission
-                    ? R.string.weather_data_missing_title : R.string.permission_missing_title);
+            mNoWeatherMessageText.setText(LocationHelper.getLocationStatusMessageResId(getActivity()));
             mNoWeatherMessageText.setTextColor(color);
         }
         int updateButtonTextResId = mWeatherInfo == null

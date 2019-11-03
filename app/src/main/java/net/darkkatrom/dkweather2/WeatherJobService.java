@@ -30,6 +30,7 @@ import net.darkkatrom.dkweather2.providers.AbstractWeatherProvider;
 import net.darkkatrom.dkweather2.providers.OpenWeatherMapProvider;
 import net.darkkatrom.dkweather2.utils.Config;
 import net.darkkatrom.dkweather2.utils.JobUtil;
+import net.darkkatrom.dkweather2.utils.LocationHelper;
 
 import java.util.Locale;
 
@@ -51,7 +52,8 @@ public class WeatherJobService extends JobService {
     private static final Criteria sLocationCriteria;
     static {
         sLocationCriteria = new Criteria();
-        sLocationCriteria.setPowerRequirement(Criteria.POWER_LOW);
+        // Ignore power requirement for now
+        // sLocationCriteria.setPowerRequirement(Criteria.POWER_LOW);
         sLocationCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
         sLocationCriteria.setCostAllowed(false);
     }
@@ -96,10 +98,14 @@ public class WeatherJobService extends JobService {
     }
 
     private Location getCurrentLocation() {
+        if (LocationHelper.getLocationStatus(this) != LocationHelper.LOCATION_STATUS_OK) {
+            return null;
+        }
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             Log.w(TAG, "network locations disabled");
-            return null;
+            // Do not force network based location, but still log
+            // return null;
         }
         Location location = lm.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         if (DEBUG) Log.d(TAG, "Current location is " + location);

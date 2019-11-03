@@ -26,14 +26,19 @@
     <string name="load_weather_data_title">Wetterdaten laden</string>
     <string name="update_weather_data_title">Wetterdaten aktualisieren</string>
     <string name="delete_weather_data_title">Wetterdaten löschen</string>
-    <string name="permission_missing_title">Keine Standortberechtigung</string>
+    <string name="location_status_disabled_message">Standort ist deaktiviert</string>
+    <string name="location_status_no_permission_message">Keine Standortberechtigung</string>
+    <string name="location_status_disabled_no_permission_message">Standort ist deaktiviert\n\nKeine Standortberechtigung</string>
     <string name="weather_data_missing_title">Keine Wetterdaten</string>
 
     <!-- Dialog -->
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_enable">Einschalten</string>
+    <string name="dialog_cancel">Abbrechen</string>
     <string name="permission_rationale_dialog_title">Berechtigung erforderlich</string>
     <string name="permission_rationale_dialog_message">Damit das Wetter angezeigt werden kann, benötigt DK Wetter Zugriff auf den aktuellen Standort.\nKlicke auf \"OK\", um den Berechtigungen Dialog erneut anzuzeigen.</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Abbrechen</string>
+    <string name="location_disabled_dialog_title">Standort kann nicht abgerufen werden!</string>
+    <string name="location_disabled_dialog_message">Standort ist deaktiviert.\nKlicke auf \"Einschalten\", um die Standort System Einstellungen zu öffnen</string>
 
     <!-- Settings -->
     <string name="app_settings_title">App Einstellungen</string>
