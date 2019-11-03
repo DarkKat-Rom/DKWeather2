@@ -18,14 +18,17 @@ package net.darkkatrom.dkweather2.providers;
 
 import android.content.Context;
 import android.location.Location;
+import android.net.Uri;
 import android.util.Log;
 
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.WeatherInfo;
 import net.darkkatrom.dkweather2.utils.Config;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -39,6 +42,8 @@ public class OpenWeatherMapProvider extends AbstractWeatherProvider {
     private static final String SELECTION_LOCATION = "lat=%f&lon=%f";
     private static final String API_KEY = "6d2f4f034d60d9680a720c12df8c7ddd";
 
+    private static final String URL_LOCATION =
+            "https://api.openweathermap.org/data/2.5/find?q=%s&mode=json&lang=%s&appid=%s";
     private static final String URL_WEATHER =
             "https://api.openweathermap.org/data/2.5/weather?%s&mode=json&units=%s&lang=%s&appid=%s";
     private static final String URL_FORECAST =
@@ -47,6 +52,38 @@ public class OpenWeatherMapProvider extends AbstractWeatherProvider {
 
     public OpenWeatherMapProvider(Context context) {
         super(context);
+    }
+
+    public List<WeatherInfo.WeatherLocation> getLocations(String input) {
+        String url = String.format(URL_LOCATION, Uri.encode(input), getLanguageCode(), API_KEY);
+        String response = retrieve(url);
+        if (response == null) {
+            return null;
+        }
+
+        log(TAG, "URL = " + url + " returning a response of " + response);
+
+        try {
+            JSONArray jsonResults = new JSONObject(response).getJSONArray("list");
+            ArrayList<WeatherInfo.WeatherLocation> results = new ArrayList<WeatherInfo.WeatherLocation>();
+            int count = jsonResults.length();
+
+            for (int i = 0; i < count; i++) {
+                JSONObject result = jsonResults.getJSONObject(i);
+                WeatherInfo.WeatherLocation location = new WeatherInfo.WeatherLocation();
+
+                location.id = result.getString("id");
+                location.city = result.getString("name");
+                location.countryId = result.getJSONObject("sys").getString("country");
+                results.add(location);
+            }
+
+            return results;
+        } catch (JSONException e) {
+            Log.e(TAG, "Received malformed location data (input=" + input + ")", e);
+        }
+
+        return null;
     }
 
     public WeatherInfo getLocationWeather(Location location, boolean metric) {

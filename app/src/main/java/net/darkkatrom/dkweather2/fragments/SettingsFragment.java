@@ -23,7 +23,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.utils.Config;
-import net.darkkatrom.dkweather2.utils.LocationHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -38,9 +37,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
         updateIconVisibility();
-        
-        findPreference(Config.PREF_KEY_WEATHER_SETTINGS).setEnabled(
-                LocationHelper.getLocationStatus(getActivity()) == LocationHelper.LOCATION_STATUS_OK);
     }
 
     private void updateIconVisibility() {

@@ -97,6 +97,14 @@ public class WeatherInfo {
         mSunset = sunset;
     }
 
+    public static class WeatherLocation {
+        public String id;
+        public String city;
+        public String postal;
+        public String countryId;
+        public String country;
+    }
+
     public String getId() {
         return mId;
     }

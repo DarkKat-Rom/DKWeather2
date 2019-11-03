@@ -39,6 +39,11 @@
     <string name="permission_rationale_dialog_message">Damit das Wetter angezeigt werden kann, benötigt DK Wetter Zugriff auf den aktuellen Standort.\nKlicke auf \"OK\", um den Berechtigungen Dialog erneut anzuzeigen.</string>
     <string name="location_disabled_dialog_title">Standort kann nicht abgerufen werden!</string>
     <string name="location_disabled_dialog_message">Standort ist deaktiviert.\nKlicke auf \"Einschalten\", um die Standort System Einstellungen zu öffnen</string>
+    <string name="dialog_select_location_title">Standort wählen</string>
+    <string name="dialog_location_progress_title">Standort überprüfen</string>
+
+    <!-- Toast -->
+    <string name="toast_cannot_retrieve_location_title">Standort kann nicht bestimmt werden!</string>
 
     <!-- Settings -->
     <string name="app_settings_title">App Einstellungen</string>
@@ -62,6 +67,11 @@
     <string name="weather_use_metric_units_title">Metrische Einheiten</string>
     <string name="weather_use_metric_units_on_summary">Metrische Einheiten</string>
     <string name="weather_use_metric_units_off_summary">Imperiale Einheiten</string>
+    <string name="weather_use_custom_location_title">Benutzerdefinierten Standort beutzen</string>
+    <string name="weather_use_custom_location_on_summary">Benutzerdefinierter Standort wird benutzt</string>
+    <string name="weather_use_custom_location_off_summary">Aktueller Standort wird benutzt</string>
+    <string name="custom_location_city_title">Standort</string>
+    <string name="custom_location_city_dialog_title">Standort eingeben</string>
 
     <!-- Units -->
     <string name="temp_celsius_unit_title">C</string>

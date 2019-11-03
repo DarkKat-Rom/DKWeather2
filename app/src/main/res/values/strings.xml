@@ -39,6 +39,11 @@
     <string name="permission_rationale_dialog_message">In order to show the weather, DK Weather needs access to the current location.\nClick \'OK\', to show the permissions dialog again.</string>
     <string name="location_disabled_dialog_title">Cannot retrieve location!</string>
     <string name="location_disabled_dialog_message">Location is disabled.\nClick \'Enable\', to open location system settings.</string>
+    <string name="dialog_select_location_title">Select location</string>
+    <string name="dialog_location_progress_title">Verifying location</string>
+
+    <!-- Toast -->
+    <string name="toast_cannot_retrieve_location_title">Cannot retrieve location!</string>
 
     <!-- Settings -->
     <string name="app_settings_title">App Settings</string>
@@ -62,6 +67,11 @@
     <string name="weather_use_metric_units_title">Metric units</string>
     <string name="weather_use_metric_units_on_summary">Metric units</string>
     <string name="weather_use_metric_units_off_summary">Imperial units</string>
+    <string name="weather_use_custom_location_title">Use custom location</string>
+    <string name="weather_use_custom_location_on_summary">Custom location will be used</string>
+    <string name="weather_use_custom_location_off_summary">Current location will be used</string>
+    <string name="custom_location_city_title">Location</string>
+    <string name="custom_location_city_dialog_title">Enter location</string>
 
     <!-- Units -->
     <string name="temp_celsius_unit_title">C</string>

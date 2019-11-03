@@ -36,12 +36,21 @@ public class Config {
     public static final String THEME_NIGHT =         "theme_night";
     public static final String THEME_FOLLOW_SYSTEM = "theme_follow_system";
 
-    public static final String PREF_KEY_WEATHER_USE_METRIC_UNITS = "weather_use_metric_units";
+    public static final String PREF_KEY_WEATHER_USE_METRIC_UNITS =
+            "weather_use_metric_units";
+    public static final String PREF_KEY_WEATHER_USE_CUSTOM_LOCATION =
+            "weather_use_custom_location";
+    public static final String PREF_KEY_WEATHER_CUSTOM_LOCATION_CITY =
+            "weather_custom_location_city";
+    public static final String PREF_KEY_WEATHER_CUSTOM_LOCATION_CITY_SUMMARY =
+            "weather_custom_location_city_summary";
 
     public static final int HIDE_PREFERENCE_ICONS_SPACE_RESERVED = 0;
     public static final int HIDE_PREFERENCE_ICONS                = 1;
     public static final int SHOW_PREFERENCE_ICONS                = 2;
 
+    public static final String PREF_KEY_LOCATION_ID   = "location_id";
+    public static final String PREF_KEY_LOCATION_NAME = "location_name";
     public static final String PREF_KEY_WEATHER_DATA  = "weather_data";
 
     public static final String PREF_KEY_LOCATION_PERMISSION_BLOCKED =
@@ -118,6 +127,48 @@ public class Config {
                 .getDefaultSharedPreferences(context);
 
         return prefs.getBoolean(PREF_KEY_WEATHER_USE_METRIC_UNITS, true);
+    }
+
+    public static String getLocationId(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.getString(PREF_KEY_LOCATION_ID, null);
+    }
+
+    public static void setLocationId(Context context, String id) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        prefs.edit().putString(PREF_KEY_LOCATION_ID, id).commit();
+    }
+    
+    public static String getLocationName(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.getString(PREF_KEY_LOCATION_NAME, null);
+    }
+    
+    public static void setLocationName(Context context, String name) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        prefs.edit().putString(PREF_KEY_LOCATION_NAME, name).commit();
+    }
+
+    public static String getCustomLocationSummary(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        return prefs.getString(PREF_KEY_WEATHER_CUSTOM_LOCATION_CITY_SUMMARY, null);
+    }
+
+    public static void setCustomLocationSummary(Context context, String summary) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        prefs.edit().putString(PREF_KEY_WEATHER_CUSTOM_LOCATION_CITY_SUMMARY, summary).commit();
     }
 
     public static boolean isLocationPermissionBlocked(Context context) {

@@ -22,4 +22,19 @@
         android:summaryOff="@string/weather_use_metric_units_off_summary"
         app:defaultValue="true" />
 
+    <SwitchPreferenceCompat
+        app:key="weather_use_custom_location"
+        app:title="@string/weather_use_custom_location_title"
+        app:iconSpaceReserved="false"
+        android:summaryOn="@string/weather_use_custom_location_on_summary"
+        android:summaryOff="@string/weather_use_custom_location_off_summary"
+        app:defaultValue="false" />
+
+    <EditTextPreference
+        app:key="weather_custom_location_city"
+        app:title="@string/custom_location_city_title"
+        app:iconSpaceReserved="false"
+        app:dependency="weather_use_custom_location"
+        android:dialogTitle="@string/custom_location_city_dialog_title" />
+
 </PreferenceScreen>
