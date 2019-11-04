@@ -201,7 +201,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             int color = getColorFromThemeAttribute(mLocationStatus == LocationHelper.LOCATION_STATUS_OK
                     ? android.R.attr.textColorPrimary : R.attr.colorError);
             mNoWeatherImage.setImageResource(mLocationStatus == LocationHelper.LOCATION_STATUS_OK
-                    ? R.drawable.weather_na : R.drawable.ic_no_location_permission);
+                    ? R.drawable.weather_na : R.drawable.ic_location_error);
             mNoWeatherImage.setImageTintList(ColorStateList.valueOf(color));
             mNoWeatherMessageText.setText(LocationHelper.getLocationStatusMessageResId(getActivity()));
             mNoWeatherMessageText.setTextColor(color);

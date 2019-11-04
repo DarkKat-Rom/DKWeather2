@@ -12,38 +12,30 @@
 -->
 <resources>
 
-    <!-- App theme (dark). -->
+    <!-- App themes (dark). -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorBackgroundFloating">@color/colorBackgroundFloating</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="colorBackgroundFloating">@color/color_background_floating</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="dialogTheme">@style/DialogTheme</item>
         <item name="snackbarStyle">@style/SnackbarStyle</item>
         <item name="snackbarTextViewStyle">@style/SnackbarTextViewStyle</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/color_background</item>
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/colorBackgroundFloating</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:colorBackground">@color/color_background_floating</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/colorBackgroundFloating</item>
-    </style>
-
-    <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
-        <item name="android:background">@color/darkkat_blue_blue_grey</item>
-    </style>
-
-    <style name="SnackbarTextViewStyle" parent="Widget.MaterialComponents.Snackbar.TextView">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:colorBackground">@color/color_background_floating</item>
     </style>
 </resources>

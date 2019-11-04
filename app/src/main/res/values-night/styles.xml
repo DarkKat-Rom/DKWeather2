@@ -12,9 +12,12 @@
 -->
 <resources>
 
-    <color name="color_primary">@color/primary_darkkat</color>
-    <color name="color_primary_dark">@color/primary_dark_darkkat</color>
-    <color name="color_accent">@color/accent_darkkat</color>
-    <color name="color_background">@color/darkkat_blue_grey</color>
-    <color name="color_background_floating">@color/darkkat_blue_blue_grey</color>
+    <!-- App styles (dark). -->
+    <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/darkkat_blue_blue_grey</item>
+    </style>
+
+    <style name="SnackbarTextViewStyle" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>
