@@ -31,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
@@ -48,7 +47,8 @@ public class WeatherLocationTask extends AsyncTask<Void, Void, List<WeatherInfo.
     private ProgressDialogFragment mProgressDialogFragment;
 
     public interface Callback {
-         void applyLocation(String locationId, String locationCity, String summary);
+        void applyLocation(String locationId, String locationCity, String summary);
+        void showSnackbar();
     };
 
     public WeatherLocationTask(FragmentActivity activity, String location, Callback callback) {
@@ -74,10 +74,7 @@ public class WeatherLocationTask extends AsyncTask<Void, Void, List<WeatherInfo.
         super.onPostExecute(results);
 
         if (results == null || results.isEmpty()) {
-            Toast.makeText(mActivity,
-                    mActivity.getString(R.string.toast_cannot_retrieve_location_title),
-                    Toast.LENGTH_SHORT)
-                    .show();
+            mCallback.showSnackbar();
         } else if (results.size() > 1) {
             handleResultDisambiguation(results);
         } else {

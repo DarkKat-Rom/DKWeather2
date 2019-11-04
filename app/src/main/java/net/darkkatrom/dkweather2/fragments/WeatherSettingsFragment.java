@@ -24,6 +24,8 @@ import androidx.preference.Preference;
 import androidx.preference.Preference.SummaryProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import net.darkkatrom.dkweather2.R;
 import net.darkkatrom.dkweather2.WeatherLocationTask;
 import net.darkkatrom.dkweather2.utils.Config;
@@ -120,5 +122,11 @@ public class WeatherSettingsFragment extends PreferenceFragmentCompat implements
         Config.setLocationId(getActivity(), locationId);
         Config.setLocationName(getActivity(), locationCity);
         mWeatherCustomLocationCity.setText(locationCity);
+    }
+
+    @Override
+    public void showSnackbar() {
+        Snackbar.make(getView(), R.string.toast_cannot_retrieve_location_title,
+                Snackbar.LENGTH_SHORT).show();
     }
 }
